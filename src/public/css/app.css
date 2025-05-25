@@ -1,0 +1,123 @@
+/* ベースのリセットとフォント */
+body {
+    margin: 0;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background-color: #f3f3f3;
+}
+
+/* ヘッダー */
+header {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+}
+
+/* ロゴ画像 */
+header img {
+    height: 32px;
+}
+
+/* 検索フォーム */
+header form {
+    flex: 1;
+    margin: 0 24px;
+}
+
+header input[type="text"] {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    color: #333;
+}
+
+/* ナビゲーションリンク */
+header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+header a:hover {
+    opacity: 0.7;
+}
+
+/* 出品ボタン */
+header button {
+    background-color: white;
+    color: black;
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 16px;
+    transition: background-color 0.3s;
+}
+
+header button:hover {
+    background-color: #e0e0e0;
+}
+
+/* メインコンテンツエリア */
+main {
+    padding: 32px;
+}
+
+.container {
+    padding: 24px 32px;
+}
+
+/* タブ */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 24px;
+}
+
+.tab {
+    margin-right: 24px;
+    padding-bottom: 8px;
+    font-size: 16px;
+    color: #666;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+    color: red;
+    font-weight: bold;
+    border-color: red;
+}
+
+.tab-container {
+    margin: 20px;
+}
+
+.tab-menu {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    color: gray;
+}
+
+.tab.active {
+    color: red;
+}
+
+.tab-pane {
+    padding: 20px 0;
+}
