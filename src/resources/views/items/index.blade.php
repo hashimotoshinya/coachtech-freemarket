@@ -13,7 +13,7 @@
         {{-- 検索ワードがある場合に検索結果の文言を表示 --}}
             @if(request('keyword'))
                 <p class="text-sm text-gray-600 mb-4">
-                    <strong>{{ request('keyword') }}</strong>」の検索結果（{{ $items->total() }}件）
+                    <strong>{{ request('keyword') }}</strong>」の検索結果（{{ $items->count() }}件）
                 </p>
             @endif
             <div class="item-grid">
