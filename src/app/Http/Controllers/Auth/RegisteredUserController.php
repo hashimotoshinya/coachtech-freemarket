@@ -24,6 +24,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('mypage.profile.edit'); // ログイン後の遷移先
+        return redirect()->route('profile.edit'); // ログイン後の遷移先
     }
 }

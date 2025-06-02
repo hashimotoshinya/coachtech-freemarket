@@ -1,6 +1,11 @@
 @extends('layouts.app')
 <link rel="stylesheet" href="{{ asset('css/items_index.css') }}">
 @section('content')
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 <div class="tab-container">
     <div class="tab-menu">
         <button class="tab active" data-tab="recommended">おすすめ</button>

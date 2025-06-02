@@ -11,9 +11,8 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    // カテゴリに属する商品のリレーション（1対多）
     public function items()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsToMany(Item::class);
     }
 }

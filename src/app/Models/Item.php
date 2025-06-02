@@ -11,8 +11,10 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'title',
+        'brand',
         'description',
+        'condition',
         'price',
         'status',
         'user_id',
@@ -44,7 +46,7 @@ class Item extends Model
 
     public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function favoredByUsers()

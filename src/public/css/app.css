@@ -23,11 +23,16 @@ header img {
 /* 検索フォーム */
 header form {
     flex: 1;
+    /* 追加：残りスペースを使う */
     margin: 0 24px;
+    /* ロゴや右側との間にスペース */
+    display: inline-flex;
+    /* 中のinputも調整可能に */
 }
 
 header input[type="text"] {
     width: 100%;
+    /* フォーム内で伸縮する */
     padding: 10px 16px;
     border-radius: 6px;
     border: none;
@@ -120,4 +125,58 @@ main {
 
 .tab-pane {
     padding: 20px 0;
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    header {
+        padding: 12px 24px;
+    }
+
+    header img {
+        height: 28px;
+    }
+
+    header .search-form input[type="text"] {
+        font-size: 15px;
+        padding: 8px 14px;
+    }
+
+    header .nav-links a,
+    header .nav-links button {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 16px;
+    }
+
+    header .search-form {
+        width: 100%;
+        margin: 12px 0;
+    }
+
+    header .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    header img {
+        height: 28px;
+    }
+
+    header .search-form input[type="text"] {
+        font-size: 14px;
+    }
+
+    header .nav-links a,
+    header .nav-links button {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
 }

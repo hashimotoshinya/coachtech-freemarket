@@ -14,9 +14,10 @@ class ItemSeeder extends Seeder
     {
         $user = User::factory()->create();
 
+        // 3カテゴリ作成
         $categories = Category::factory()->count(3)->create();
 
-
+        // 商品一覧
         $items = [
             [
                 'title' => '腕時計',
@@ -91,20 +92,26 @@ class ItemSeeder extends Seeder
         ];
 
         foreach ($items as $index => $itemData) {
+            // 商品登録
             $item = Item::create([
                 'user_id' => $user->id,
                 'title' => $itemData['title'],
                 'price' => $itemData['price'],
                 'description' => $itemData['description'],
                 'condition' => $itemData['condition'],
-                'category_id' => $categories[$index % $categories->count()]->id,
                 'status' => 'available',
             ]);
 
+            // 商品画像登録
             ItemImage::create([
                 'item_id' => $item->id,
                 'image_path' => 'images/' . $itemData['image'],
             ]);
+
+            // カテゴリを1つ紐付け（ランダムでもOK）
+            $item->categories()->attach(
+                $categories[$index % $categories->count()]->id
+            );
         }
     }
 }

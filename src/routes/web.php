@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\MypageController;
+use App\Http\Controllers\ProfileController;
 
 // トップページ（商品一覧）
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
@@ -28,9 +29,10 @@ Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddre
 Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
 
 // 商品出品
-Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
-Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
+    Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
+});
 // 会員登録
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
@@ -47,11 +49,18 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // マイページ
-Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
+    Route::get('/mypage/edit', [MypageController::class, 'edit'])->name('mypage.edit');
+    Route::post('/mypage/update', [MypageController::class, 'update'])->name('mypage.update');
+});
 
 // プロフィール編集
-Route::get('/mypage/profile', [MypageController::class, 'edit'])->name('mypage.profile.edit');
-Route::post('/mypage/profile', [MypageController::class, 'update'])->name('mypage.profile.update');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/mypage/profile', [ProfileController::class, 'store'])->name('profile.store');
+    Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 // お気に入り追加
 Route::post('/favorites/{item}', [FavoriteController::class, 'store'])->name('favorites.store')->middleware('auth');

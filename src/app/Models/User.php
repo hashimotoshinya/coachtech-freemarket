@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Profile;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Item;
 
 class User extends Authenticatable
 {
@@ -43,8 +45,23 @@ class User extends Authenticatable
     ];
 
     public function favorites()
-{
-    return $this->belongsToMany(Item::class, 'favorites')
-        ->withTimestamps();
-}
+    {
+        return $this->belongsToMany(Item::class, 'favorites')
+            ->withTimestamps();
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class); // Itemモデルとの1対多
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class); // Purchase モデルが存在することが前提
+    }
 }

@@ -9,37 +9,34 @@
 </head>
 <body class="bg-gray-100">
 
-    <header class="bg-black text-white px-6 py-4 flex items-center justify-between">
-        {{-- ロゴ --}}
-        <div class="flex items-center space-x-4">
-            <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH Logo" class="h-8">
-        </div>
+    <header>
+        <!-- ロゴ -->
+        <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH Logo">
 
-        {{-- 検索ボックス --}}
-        <form action="{{ url()->current() }}" method="GET" class="flex-1 mx-6">
+        <!-- 検索フォーム -->
+        <form action="{{ url()->current() }}" method="GET">
             <input
                 type="text"
                 name="keyword"
                 placeholder="なにをお探しですか？"
                 value="{{ request('keyword') }}"
-                class="w-full rounded-md px-4 py-2 text-black"
-            />
+            >
         </form>
 
-        {{-- ナビゲーションボタン --}}
-        <div class="flex items-center space-x-4">
+        <!-- ナビゲーション -->
+        <div>
             @auth
-                <form method="POST" action="{{ route('logout') }}">
+                <form  action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="hover:underline">ログアウト</button>
+                    <button type="submit">ログアウト</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="hover:underline">ログイン</a>
-                <a href="{{ route('login') }}" class="hover:underline">マイページ</a>
-                <a href="{{ route('login') }}">
-                    <button class="bg-white text-black px-4 py-1 rounded-md">出品</button>
-                </a>
+                <a href="{{ route('login') }}">ログイン</a>
             @endauth
+            <a href="{{ auth()->check() ? route('mypage.index') : route('login') }}">マイページ</a>
+            <a href="{{ auth()->check() ? route('sell.create') : route('login') }}">
+                <button>出品</button>
+            </a>
         </div>
     </header>
 
