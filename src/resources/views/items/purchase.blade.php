@@ -28,8 +28,8 @@
                 <div class="select-box">
                     <select name="payment_method" onchange="updatePaymentMethod(this)">
                         <option value="">選択してください</option>
-                        <option value="コンビニ払い" {{ old('payment_method') == 'コンビニ払い' ? 'selected' : '' }}>コンビニ払い</option>
-                        <option value="カード払い" {{ old('payment_method') == 'カード払い' ? 'selected' : '' }}>カード払い</option>
+                        <option value="convenience" {{ old('payment_method') == 'convenience' ? 'selected' : '' }}>コンビニ払い</option>
+                        <option value="card" {{ old('payment_method') == 'card' ? 'selected' : '' }}>カード払い</option>
                     </select>
                     @if ($errors->has('payment_method'))
                         <p class="error">{{ $errors->first('payment_method') }}</p>

@@ -33,6 +33,8 @@ Route::get('/purchase/{item}', [PurchaseController::class, 'showPurchaseForm'])-
 
 // 購入確定処理
 Route::post('/purchase/{item_id}', [PurchaseController::class, 'complete'])->name('purchase.complete');
+Route::post('/purchase/complete/{item_id}', [PurchaseController::class, 'complete'])->name('purchase.complete');
+Route::get('/purchase/stripe/success/{item_id}', [PurchaseController::class, 'stripeSuccess'])->name('purchase.stripe.success');
 
 // 商品出品
 Route::middleware(['auth'])->group(function () {
