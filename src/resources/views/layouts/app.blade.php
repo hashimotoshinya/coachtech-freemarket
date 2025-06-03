@@ -6,6 +6,7 @@
     <title>COACHTECH フリマ</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
+    @yield('css')
 </head>
 <body class="bg-gray-100">
 

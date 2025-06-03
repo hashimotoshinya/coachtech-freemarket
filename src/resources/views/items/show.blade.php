@@ -46,14 +46,10 @@
 
             {{-- 購入ボタン --}}
             @auth
-                @if(auth()->user()->is_approved)
-                    <a href="{{ route('items.purchase', $item->id) }}"
-                        class="purchase-button hover:bg-red-600 transition">
-                        購入手続きへ
-                    </a>
-                @else
-                    <p class="text-red-600 font-semibold">※購入には承認が必要です。</p>
-                @endif
+                <a href="{{ route('items.purchase', $item->id) }}"
+                    class="purchase-button hover:bg-red-600 transition">
+                    購入手続きへ
+                </a>
             @else
                 <a href="{{ route('login') }}"
                     class="purchase-button hover:bg-red-600 transition">

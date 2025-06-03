@@ -1,0 +1,172 @@
+/* 全体レイアウト */
+.purchase-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 2em;
+    background-color: #ffffff;
+    gap: 3em;
+}
+
+/* 左カラム（商品情報 + 支払い + 配送先） */
+.left-column {
+    flex: 2;
+    padding-right: 2em;
+    border-right: 1px solid #ccc;
+}
+
+.item-image img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    margin-bottom: 1em;
+}
+
+.item-details {
+    margin-bottom: 2em;
+}
+
+.item-name {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.item-price {
+    font-size: 1.2em;
+    color: #444;
+}
+
+/* 支払い方法 */
+.payment-section {
+    margin-bottom: 2em;
+}
+
+.payment-section h3 {
+    font-size: 1.1em;
+    margin-bottom: 0.5em;
+}
+
+.select-box select {
+    width: 100%;
+    padding: 0.6em;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* 配送先 */
+.shipping-section h3 {
+    font-size: 1.1em;
+    margin-bottom: 0.3em;
+}
+
+.shipping-section p {
+    line-height: 1.6;
+    margin-bottom: 0.5em;
+}
+
+.address-edit-link {
+    display: inline-block;
+    text-align: right;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.address-edit-link:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* 右カラム（サマリーボックスとボタン） */
+.right-column {
+    flex: 1;
+}
+
+.summary-box {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin-bottom: 1em;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+}
+
+.summary-box table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-box td {
+    padding: 0.8em 0;
+    font-size: 1em;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.summary-box tr:last-child td {
+    border-bottom: none;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* 購入ボタン */
+.purchase-button-container {
+    margin-top: 1em;
+}
+
+.purchase-button {
+    width: 100%;
+    padding: 1em;
+    font-size: 1.1em;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.purchase-button:hover {
+    background-color: #e85454;
+}
+
+/* タブレット対応（768px〜850px） */
+@media screen and (max-width: 850px) and (min-width: 768px) {
+    .item-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .edit-button {
+        font-size: 14px;
+        padding: 6px 16px;
+    }
+
+    .username {
+        font-size: 20px;
+    }
+
+    .user-icon {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* PC対応（1400px〜1540px） */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .mypage-container {
+        max-width: 1280px;
+    }
+
+    .item-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .item-card img {
+        height: 200px;
+    }
+}

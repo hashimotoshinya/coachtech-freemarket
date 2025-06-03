@@ -39,4 +39,15 @@ class ItemController extends Controller
         $item = Item::with(['comments.user', 'categories'])->findOrFail($id);
         return view('items.show', compact('item'));
     }
+
+    public function purchase($id)
+    {
+        $item = Item::findOrFail($id);
+
+        // プロフィール情報の取得（ユーザーがログインしている前提）
+        $user = auth()->user();
+        $profile = $user->profile; // リレーションなら null の可能性あり
+
+        return view('items.purchase', compact('item', 'profile'));
+    }
 }

@@ -21,12 +21,18 @@ Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show
 Route::post('/items/{item}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 // 商品購入
-Route::get('/purchase/{item_id}', [PurchaseController::class, 'index'])->name('purchase.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/purchase/{item}', [ItemController::class, 'purchase'])->name('items.purchase');
+});
 Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchase.store');
 
 // 購入時の住所変更
 Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
 Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
+Route::get('/purchase/{item}', [PurchaseController::class, 'showPurchaseForm'])->name('items.purchase');
+
+// 購入確定処理
+Route::post('/purchase/{item_id}', [PurchaseController::class, 'complete'])->name('purchase.complete');
 
 // 商品出品
 Route::middleware(['auth'])->group(function () {
