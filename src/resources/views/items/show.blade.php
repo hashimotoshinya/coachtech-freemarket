@@ -36,9 +36,19 @@
 
             {{-- アイコン --}}
             <div class="flex gap-4">
-                <div class="flex items-center gap-1 text-gray-700">
-                    <span>⭐</span><span>{{ $item->favoredByUsers->count() }}</span>
+                <div class="flex items-center gap-1">
+                    <form method="POST" action="{{ auth()->user() && auth()->user()->favorites->contains($item->id) ? route('favorite.destroy', $item) : route('favorite.store', $item) }}">
+                        @csrf
+                        @if (auth()->user() && auth()->user()->favorites->contains($item->id))
+                            @method('DELETE')
+                            <button type="submit" class="text-yellow-500">⭐</button>
+                        @else
+                            <button type="submit" class="text-gray-400 hover:text-yellow-500">⭐</button>
+                        @endif
+                    </form>
+                    <span>{{ $item->favoredByUsers->count() }}</span>
                 </div>
+
                 <div class="flex items-center gap-1 text-gray-700">
                     <span>💬</span><span>{{ $item->comments->count() }}</span>
                 </div>
@@ -100,7 +110,10 @@
                     <form action="{{ route('comments.store', $item->id) }}" method="POST" class="comment-form mt-6">
                         @csrf
                         <label for="content" class="block font-semibold mb-1">商品へのコメント</label>
-                        <textarea name="content" id="content" rows="3" required></textarea>
+                        <textarea name="content" id="content" rows="3">{{ old('content') }}</textarea>
+                        @error('content')
+                            <p class="error">{{ $message }}</p>
+                        @enderror
                         <button type="submit">コメントを送信する</button>
                     </form>
                 @else

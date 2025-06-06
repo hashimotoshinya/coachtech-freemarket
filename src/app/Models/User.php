@@ -46,8 +46,7 @@ class User extends Authenticatable
 
     public function favorites()
     {
-        return $this->belongsToMany(Item::class, 'favorites')
-            ->withTimestamps();
+        return $this->belongsToMany(Item::class, 'favorites')->withTimestamps();
     }
 
     public function profile()
@@ -63,5 +62,10 @@ class User extends Authenticatable
     public function purchases()
     {
         return $this->hasMany(Purchase::class); // Purchase モデルが存在することが前提
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

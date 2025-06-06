@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Purchase;
+use App\Models\Item;
 
 class MypageController extends Controller
 {
@@ -11,7 +13,11 @@ class MypageController extends Controller
     {
         $user = Auth::user();
         $items = $user->items()->with('itemImages')->get();
-        $boughtItems = $user->purchases()->with('item.itemImages')->get(); // 購入した商品（中に item を持つ）
+        // 購入した商品
+        $boughtItems = Purchase::with('item.itemImages')
+            ->where('user_id', $user->id)
+            ->get()
+            ->pluck('item'); // itemだけ取り出す
         // 売れた商品（例：purchased_flg が true の商品）
         $soldItems = $items->filter(function ($item) {
             return $item->purchased_flg === true;

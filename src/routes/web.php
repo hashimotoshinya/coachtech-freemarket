@@ -9,6 +9,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FavoriteController;
 
 // トップページ（商品一覧）
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
@@ -69,10 +71,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/mypage/profile', [ProfileController::class, 'store'])->name('profile.store');
     Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
+// コメント投稿
+Route::post('/items/{item}/comments', [CommentController::class, 'store'])->name('comments.store');
 
-// お気に入り追加
-Route::post('/favorites/{item}', [FavoriteController::class, 'store'])->name('favorites.store')->middleware('auth');
-
-// お気に入り解除
-Route::delete('/favorites/{item}', [FavoriteController::class, 'destroy'])->name('favorites.destroy')->middleware('auth');
-
+// お気に入り追加 お気に入り解除
+Route::middleware('auth')->group(function () {
+    Route::post('/items/{item}/favorite', [App\Http\Controllers\FavoriteController::class, 'store'])->name('favorite.store');
+    Route::delete('/items/{item}/favorite', [App\Http\Controllers\FavoriteController::class, 'destroy'])->name('favorite.destroy');
+});

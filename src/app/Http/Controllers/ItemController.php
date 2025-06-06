@@ -36,8 +36,15 @@ class ItemController extends Controller
 
     public function show($id)
     {
-        $item = Item::with(['comments.user', 'categories'])->findOrFail($id);
-        return view('items.show', compact('item'));
+        $item = Item::with(['comments.user', 'favoredByUsers'])->findOrFail($id);
+
+        // ログインユーザーに関連するお気に入りを eager load
+        $user = auth()->user();
+        if ($user) {
+            $user->load('favorites');
+        }
+
+        return view('items.show', compact('item', 'user'));
     }
 
     public function purchase($id)

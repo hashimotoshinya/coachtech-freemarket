@@ -97,6 +97,12 @@
     resize: vertical;
 }
 
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
 .comment-form button {
     background-color: #f44336;
     color: white;
