@@ -24,8 +24,8 @@
                     <img src="{{ asset('storage/' . ($item->itemImages->first()->image_path ?? 'images/no_image.png')) }}" alt="{{ $item->title }}">
                     <p class="item-name">{{ $item->title }}</p>
                     <p class="item-price">￥{{ number_format($item->price) }}</p>
-                    <span class="item-status {{ $item->is_sold ? 'sold-out' : 'on-sale' }}">
-                        {{ $item->is_sold ? '売り切れ' : '出品中' }}
+                    <span class="item-status {{ $item->status === 'sold' ? 'sold-out' : 'on-sale' }}">
+                        {{ $item->status === 'sold' ? 'Sold' : 'Sale' }}
                     </span>
                 </a>
             @empty

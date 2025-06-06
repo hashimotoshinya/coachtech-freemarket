@@ -51,6 +51,6 @@ class ProfileController extends Controller
         $user->profile()->updateOrCreate(['user_id' => $user->id], $data);
         $user->update(['name' => $data['name']]);
 
-        return redirect()->route('profile.update')->with('success', 'プロフィールを更新しました');
+        return redirect()->route('mypage.index')->with('success', 'プロフィールを更新しました');
     }
 }

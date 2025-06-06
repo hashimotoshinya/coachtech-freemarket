@@ -78,8 +78,10 @@
                 <h2 class="text-lg font-semibold mb-1">商品情報</h2>
                 <p>
                     <strong>カテゴリ：</strong>
-                    @if ($item->category)
-                        <span class="category-tag">{{ $item->category->name }}</span>
+                    @if ($item->categories && $item->categories->count())
+                        @foreach ($item->categories as $category)
+                            <span class="category-tag">{{ $category->name }}</span>
+                        @endforeach
                     @else
                         <span class="text-gray-500">カテゴリなし</span>
                     @endif

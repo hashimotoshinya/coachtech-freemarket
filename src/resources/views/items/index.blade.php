@@ -9,7 +9,7 @@
 <div class="tab-container">
     <div class="tab-menu">
         <button class="tab active" data-tab="recommended">おすすめ</button>
-        <button class="tab" data-tab="mylist" onclick="redirectIfGuest()">マイリスト</button>
+        <button class="tab" data-tab="mylist">マイリスト</button>
     </div>
 
     <div class="tab-content">
@@ -27,14 +27,13 @@
                     <img src="{{ asset('storage/' . ($item->itemImages->first()->image_path ?? 'images/no_image.png')) }}" alt="{{ $item->name }}">
                         <p class="item-name">{{ $item->title }}</p>
                         <p class="item-price">￥{{ number_format($item->price) }}</p>
-                        <span class="item-status {{ $item->is_sold ? 'sold-out' : 'on-sale' }}">
-                            {{ $item->is_sold ? '売り切れ' : '出品中' }}
+                        <span class="item-status {{ $item->status === 'sold' ? 'sold-out' : 'on-sale' }}">
+                            {{ $item->status === 'sold' ? 'Sold' : 'Sale' }}
                         </span>
                     </a>
                 @endforeach
             </div>
         </div>
-
         {{-- マイリスト --}}
         <div id="mylist" class="tab-pane" style="display:none;">
             @auth
@@ -47,9 +46,9 @@
                     @forelse($myItems as $item)
                         <a href="{{ route('items.show', $item->id) }}" class="item-card">
                         <img src="{{ asset('storage/' . ($item->itemImages->first()->image_path ?? 'images/no_image.png')) }}" alt="商品画像">
-                            <p class="item-name">{{ $item->name }}</p>
-                            <span class="item-status {{ $item->is_sold ? 'sold-out' : 'on-sale' }}">
-                                {{ $item->is_sold ? '売り切れ' : '出品中' }}
+                            <p class="item-name">{{ $item->title }}</p>
+                            <span class="item-status {{ $item->status === 'sold' ? 'sold-out' : 'on-sale' }}">
+                                    {{ $item->status === 'sold' ? 'Sold' : 'Sale' }}
                             </span>
                         </a>
                     @empty
@@ -62,28 +61,29 @@
 </div>
 @endsection
 
-@section('scripts')
 <script>
-    const tabs = document.querySelectorAll('.tab');
-    const panes = document.querySelectorAll('.tab-pane');
+    document.addEventListener('DOMContentLoaded', function () {
+        const isGuest = @json(Auth::guest()); // true or false as JS boolean
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const target = tab.dataset.tab;
+        const tabs = document.querySelectorAll('.tab');
+        const panes = document.querySelectorAll('.tab-pane');
 
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
 
-            panes.forEach(pane => {
-                pane.style.display = pane.id === target ? 'block' : 'none';
+                if (target === 'mylist' && isGuest) {
+                    window.location.href = "{{ route('login') }}";
+                    return;
+                }
+
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                panes.forEach(pane => {
+                    pane.style.display = pane.id === target ? 'block' : 'none';
+                });
             });
         });
     });
-
-    function redirectIfGuest() {
-        @guest
-            window.location.href = "{{ route('login') }}";
-        @endguest
-    }
 </script>
-@endsection

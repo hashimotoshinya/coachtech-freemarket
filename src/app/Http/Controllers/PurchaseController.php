@@ -42,7 +42,7 @@ class PurchaseController extends Controller
                 'line_items' => [[
                     'price_data' => [
                         'currency' => 'jpy',
-                        'unit_amount' => $item->price * 100, // 円 → センチ
+                        'unit_amount' => $item->price,
                         'product_data' => [
                             'name' => $item->title,
                         ],
@@ -59,7 +59,7 @@ class PurchaseController extends Controller
             Stripe::setApiKey(config('services.stripe.secret'));
 
             $paymentIntent = PaymentIntent::create([
-                'amount' => $item->price * 100,
+                'amount' => $item->price,
                 'currency' => 'jpy',
                 'payment_method_types' => ['konbini'],
                 'description' => $item->title,
@@ -68,6 +68,10 @@ class PurchaseController extends Controller
                     'item_id' => $item->id,
                 ],
             ]);
+
+            // 🔽 soldに更新
+            $item->status = 'sold';
+            $item->save();
 
             // 本来はウェブフックで支払い確定を確認するが、ここでは一旦画面表示で仮対応
             return view('purchase.konbini', [
@@ -94,6 +98,10 @@ class PurchaseController extends Controller
             'building' => $addressData['building'],
             'payment_method' => 'card',
         ]);
+
+        // soldフラグを更新
+        $item->status = 'sold';
+        $item->save();
 
         session()->forget('purchase_address');
 
