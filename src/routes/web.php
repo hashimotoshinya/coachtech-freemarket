@@ -11,6 +11,8 @@ use App\Http\Controllers\MypageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FavoriteController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 // トップページ（商品一覧）
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
@@ -66,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // プロフィール編集
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mypage/profile', [ProfileController::class, 'store'])->name('profile.store');
     Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -79,4 +81,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/items/{item}/favorite', [App\Http\Controllers\FavoriteController::class, 'store'])->name('favorite.store');
     Route::delete('/items/{item}/favorite', [App\Http\Controllers\FavoriteController::class, 'destroy'])->name('favorite.destroy');
 });
+// メール認証
+Route::get('/email/verify', function () {
+    return view('auth.verify-email'); // ビューは後述
+})->middleware(['auth'])->name('verification.notice');
 
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); // 認証完了
+    return redirect('/mypage/profile'); // 認証後の遷移先
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', '認証リンクを再送しました。');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

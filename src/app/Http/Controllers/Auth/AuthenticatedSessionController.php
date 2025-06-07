@@ -13,7 +13,7 @@ class AuthenticatedSessionController extends FortifyController
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('mypage.profile.edit'));
+            return redirect()->intended(route(RouteServiceProvider::HOME));
         }
 
         return back()->withErrors([
