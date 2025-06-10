@@ -11,7 +11,7 @@ class MypageController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::user()->load('profile');
         $items = $user->items()->with('itemImages')->get();
         // 購入した商品
         $boughtItems = Purchase::with('item.itemImages')

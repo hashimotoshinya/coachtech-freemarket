@@ -92,7 +92,8 @@
 
 <script>
     function updatePaymentMethod(select) {
-        document.getElementById('selected-method').innerText = select.value || '未選択';
+        const selected = select.options[select.selectedIndex].text;
+        document.getElementById('selected-method').innerText = selected || '未選択';
     }
 </script>
 @endsection

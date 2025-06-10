@@ -26,8 +26,9 @@ class ItemController extends Controller
         // マイリストタブ（ログインユーザーのお気に入り）
         $myItems = auth()->check()
             ? auth()->user()->favorites()
+                ->where('items.user_id', '!=', auth()->id())
                 ->when($keyword, function ($query) use ($keyword) {
-                    $query->where('title', 'like', "%{$keyword}%");
+                    $query->where('items.title', 'like', "%{$keyword}%");
                 })
                 ->with('itemImages')
                 ->latest()

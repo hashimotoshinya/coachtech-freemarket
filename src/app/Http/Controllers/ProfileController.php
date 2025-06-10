@@ -24,7 +24,8 @@ class ProfileController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('profiles', 'public');
+            // 保存先を profile_images に変更
+            $data['image_path'] = $request->file('image')->store('profile_images', 'public');
         }
 
         $profile = new Profile($data);
@@ -42,13 +43,21 @@ class ProfileController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
+            // 旧画像の削除（存在する場合）
             if ($user->profile && $user->profile->image_path) {
                 Storage::disk('public')->delete($user->profile->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('profiles', 'public');
+            // 新しい画像を保存（profile_images ディレクトリ）
+            $data['image_path'] = $request->file('image')->store('profile_images', 'public');
         }
 
-        $user->profile()->updateOrCreate(['user_id' => $user->id], $data);
+        // プロフィール情報を更新または新規作成
+        $user->profile()->updateOrCreate(
+            ['user_id' => $user->id],
+            $data
+        );
+
+        // ユーザー名の更新
         $user->update(['name' => $data['name']]);
 
         return redirect()->route('mypage.index')->with('success', 'プロフィールを更新しました');

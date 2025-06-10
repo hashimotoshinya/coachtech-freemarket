@@ -25,11 +25,13 @@
         @endif
 
         <div class="image-upload">
-            <img src="{{ $profile && $profile->image_path ? asset('storage/' . $profile->image_path) : asset('images/default-user.png') }}"
+            <img id="preview-image"
+                src="{{ $profile && $profile->image_path ? asset('storage/' . $profile->image_path) : asset('images/default-user.png') }}"
                 class="profile-img" alt="Profile Image">
+
             <label class="image-select-btn">
                 画像を選択する
-                <input type="file" name="image" hidden>
+                <input type="file" name="image" id="image-input" hidden>
             </label>
         </div>
 
@@ -58,4 +60,14 @@
         </div>
     </form>
 </div>
+
+{{-- JavaScriptで画像プレビュー --}}
+<script>
+    document.getElementById('image-input').addEventListener('change', function (event) {
+        const [file] = event.target.files;
+        if (file) {
+            document.getElementById('preview-image').src = URL.createObjectURL(file);
+        }
+    });
+</script>
 @endsection

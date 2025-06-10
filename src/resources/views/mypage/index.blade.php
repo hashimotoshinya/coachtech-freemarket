@@ -6,8 +6,11 @@
 <div class="mypage-container">
     <div class="profile-section">
     <img class="user-icon"
-        src="{{ $user && $user->image_path ? asset('storage/' . $user->image_path) : asset('images/default-user.png') }}"
-        alt="ユーザー画像">
+        <img class="user-icon"
+            src="{{ $user->profile && $user->profile->image_path
+            ? asset('storage/' . $user->profile->image_path)
+            : asset('images/default-user.png') }}"
+            alt="ユーザー画像">
         <h2 class="username">{{ $user->name }}</h2>
         <a href="{{ route('profile.update') }}" class="edit-button">プロフィールを編集</a>
     </div>
@@ -20,14 +23,14 @@
     <div class="items-section">
         <div id="sell-items" class="item-grid">
             @forelse($items as $item)
-                <a href="{{ route('items.show', $item->id) }}" class="item-card">
+                <div class="item-card">
                     <img src="{{ asset('storage/' . ($item->itemImages->first()->image_path ?? 'images/no_image.png')) }}" alt="{{ $item->title }}">
                     <p class="item-name">{{ $item->title }}</p>
                     <p class="item-price">￥{{ number_format($item->price) }}</p>
                     <span class="item-status {{ $item->status === 'sold' ? 'sold-out' : 'on-sale' }}">
                         {{ $item->status === 'sold' ? 'Sold' : 'Sale' }}
                     </span>
-                </a>
+                </div>
             @empty
                 <p>まだ出品している商品はありません。</p>
             @endforelse

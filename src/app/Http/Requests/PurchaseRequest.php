@@ -39,10 +39,20 @@ class PurchaseRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $profile = Auth::user()->profile;
+            $sessionAddress = session('purchase_address');
+            if ($sessionAddress) {
+                $postalCode = $sessionAddress['postal_code'] ?? null;
+                $address = $sessionAddress['address'] ?? null;
+                $building = $sessionAddress['building'] ?? null;
+            } else {
+                $profile = Auth::user()->profile;
+                $postalCode = $profile->postal_code ?? null;
+                $address = $profile->address ?? null;
+                $building = $profile->building ?? null;
+            }
 
-            if (!$profile || !$profile->postal_code || !$profile->address || !$profile->building) {
-                $validator->errors()->add('profile', '未設定の方は変更ボタンへ');
+            if (!$postalCode || !$address || !$building) {
+                $validator->errors()->add('profile', '配送先住所が未設定です。変更ボタンから設定してください。');
             }
         });
     }

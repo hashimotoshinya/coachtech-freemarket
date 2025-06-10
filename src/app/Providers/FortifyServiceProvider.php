@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -36,6 +37,10 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        Fortify::loginView(function () {
+            return view('auth.login'); // 使用しているBladeファイル名に合わせて修正
+        });
+
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
@@ -48,17 +53,19 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
-
+            // ユーザーが存在し、パスワードも一致する場合
             if ($user && Hash::check($request->password, $user->password)) {
                 if ($user->hasVerifiedEmail()) {
                     return $user;
                 }
-
+                // メール未認証
                 session()->flash('error', 'メール認証が完了していません。認証メールを確認してください。');
                 return null;
             }
-
-            return null;
+            // 認証失敗時：ここで例外を投げてバリデーションエラーを出す
+            throw ValidationException::withMessages([
+                'email' => 'ログイン情報が登録されていません',
+            ])->redirectTo('/login');
         });
     }
 }

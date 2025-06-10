@@ -10,70 +10,69 @@ use App\Models\Purchase;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Stripe\PaymentIntent;
+use App\Services\StripeService;
 
 class PurchaseController extends Controller
 {
     // 購入完了処理
+    protected $stripe;
+
+    public function __construct(StripeService $stripe)
+    {
+        $this->stripe = $stripe;
+    }
+
     public function complete(PurchaseRequest $request, $item_id)
     {
         $user = auth()->user();
         $item = Item::findOrFail($item_id);
-        $profile = $user->profile;
 
-        if (!$profile) {
+        $sessionAddress = session('purchase_address');
+        if ($sessionAddress) {
+            $postalCode = $sessionAddress['postal_code'] ?? null;
+            $address = $sessionAddress['address'] ?? null;
+            $building = $sessionAddress['building'] ?? null;
+        } else {
+            $profile = $user->profile;
+            $postalCode = $profile->postal_code ?? null;
+            $address = $profile->address ?? null;
+            $building = $profile->building ?? null;
+        }
+
+        if (!$postalCode || !$address || !$building) {
             return back()->withErrors([
                 'profile' => '配送先住所を入力してください。',
             ])->withInput();
         }
 
-        // 住所：セッションに変更済み住所があればそれを使う、なければプロフィールから取得
-        $addressData = session('purchase_address', [
-            'postal_code' => $profile->postal_code,
-            'address' => $profile->address,
-            'building' => $profile->building,
+        $paymentMethod = $request->payment_method;
+
+        $purchase = $user->purchases()->create([
+            'item_id' => $item->id,
+            'postal_code' => $postalCode,
+            'address' => $address,
+            'building' => $building,
+            'payment_method' => $paymentMethod,
         ]);
 
-        // 🔽 支払い方法によって処理を分岐
-        if ($request->payment_method === 'card') {
-            Stripe::setApiKey(config('services.stripe.secret')); // config/services.php に設定必要
-
-            $session = Session::create([
-                'payment_method_types' => ['card'],
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => 'jpy',
-                        'unit_amount' => $item->price,
-                        'product_data' => [
-                            'name' => $item->title,
-                        ],
-                    ],
-                    'quantity' => 1,
-                ]],
-                'mode' => 'payment',
-                'success_url' => route('items.index'),
-                'cancel_url' => route('items.purchase', ['item' => $item->id]),
-            ]);
-
+        if ($paymentMethod === 'card') {
+            $session = $this->stripe->createCheckoutSession($item);
             return redirect($session->url);
-        } elseif ($request->payment_method === 'convenience') {
-            Stripe::setApiKey(config('services.stripe.secret'));
+        } elseif ($paymentMethod === 'convenience') {
+            $paymentIntent = $this->stripe->createKonbiniPaymentIntent($item, $user);
 
-            $paymentIntent = PaymentIntent::create([
-                'amount' => $item->price,
-                'currency' => 'jpy',
-                'payment_method_types' => ['konbini'],
-                'description' => $item->title,
-                'metadata' => [
-                    'user_id' => $user->id,
-                    'item_id' => $item->id,
-                ],
+            Purchase::create([
+                'user_id' => $user->id,
+                'item_id' => $item->id,
+                'postal_code' => $postalCode,
+                'address' => $address,
+                'building' => $building,
+                'payment_method' => 'convenience',
             ]);
 
-            // 🔽 soldに更新
             $item->status = 'sold';
             $item->save();
 
-            // 本来はウェブフックで支払い確定を確認するが、ここでは一旦画面表示で仮対応
             return view('purchase.konbini', [
                 'paymentIntent' => $paymentIntent,
                 'item' => $item,

@@ -90,39 +90,43 @@
             </div>
             {{-- コメントセクション --}}
             <div class="comments">
+                    <h2 class="text-xl font-bold mb-4">コメント ({{ $item->comments->count() }})</h2>
 
-                <h2 class="text-xl font-bold mb-4">コメント ({{ $item->comments->count() }})</h2>
-
-                <div class="overflow-y-auto max-h-60 pr-2 space-y-4">
-                    @foreach ($item->comments as $comment)
-                        <div class="comment">
-                            <div class="comment-avatar"></div>
-                            <div>
-                                <p class="font-semibold">{{ $comment->user->name }}</p>
-                                <div class="comment-body">
-                                    {{ $comment->content }}
+                    <div class="overflow-y-auto max-h-60 pr-2 space-y-4">
+                        @foreach ($item->comments as $comment)
+                            <div class="comment">
+                                <div class="comment-avatar"></div>
+                                <div>
+                                    <p class="font-semibold">{{ $comment->user->name }}</p>
+                                    <div class="comment-body">
+                                        {{ $comment->content }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
 
                 {{-- コメント投稿 --}}
-                @auth
-                    <form action="{{ route('comments.store', $item->id) }}" method="POST" class="comment-form mt-6">
-                        @csrf
-                        <label for="content" class="block font-semibold mb-1">商品へのコメント</label>
-                        <textarea name="content" id="content" rows="3">{{ old('content') }}</textarea>
-                        @error('content')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                        <button type="submit">コメントを送信する</button>
-                    </form>
-                @else
-                    <p class="text-gray-600 mt-4 text-center">
-                        コメントするには <a href="{{ route('login') }}" class="text-blue-500 underline">ログイン</a> してください。
-                    </p>
-                @endauth
+                <div class="mt-6">
+                    @auth
+                        <form action="{{ route('comments.store', $item->id) }}" method="POST" class="comment-form">
+                            @csrf
+                            <label for="content" class="block font-semibold mb-1">商品へのコメント</label>
+                            <textarea name="content" id="content" rows="3" class="w-full border rounded p-2">{{ old('content') }}</textarea>
+                            @error('content')
+                                <p class="error text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                            <button type="submit" class="purchase-button hover:bg-red-600 transition mt-2">
+                                コメントを送信する
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="purchase-button hover:bg-red-600 transition block text-center mt-2">
+                            コメントする（ログイン）
+                        </a>
+                    @endauth
+                </div>
             </div>
         </div>
     </div>

@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
@@ -49,11 +48,6 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-// ログイン／ログアウト
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -74,7 +68,9 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 // コメント投稿
-Route::post('/items/{item}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments/{item_id}', [CommentController::class, 'store'])
+    ->middleware('auth')
+    ->name('comments.store');
 
 // お気に入り追加 お気に入り解除
 Route::middleware('auth')->group(function () {
