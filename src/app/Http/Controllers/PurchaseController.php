@@ -104,7 +104,7 @@ class PurchaseController extends Controller
 
         session()->forget('purchase_address');
 
-        return redirect()->route('purchase.thanks')->with('message', 'カードでの購入が完了しました。');
+        return redirect()->route('mypage.index')->with('message', 'カードでの購入が完了しました。');
     }
 
     // 住所変更フォーム表示

@@ -51,6 +51,38 @@ class PurchaseItemTest extends TestCase
         $response->assertRedirect('https://checkout.stripe.com/test-session');
     }
 
+    public function test_card_payment_completion_creates_purchase_and_marks_item_sold()
+    {
+        $user = User::factory()->create();
+        $item = Item::factory()->create(['status' => 'available']);
+
+        // セッションに住所を保存（complete() で保存された前提を再現）
+        $this->actingAs($user)
+            ->withSession([
+                'purchase_address' => [
+                    'postal_code' => '123-4567',
+                    'address' => 'テスト市テスト町',
+                    'building' => 'テストビル101',
+                ]
+            ]);
+
+        // stripeSuccess にアクセス（= Stripe決済成功後の処理を再現）
+        $response = $this->get(route('purchase.stripe.success', ['item_id' => $item->id]));
+
+        // リダイレクト先を確認
+        $response->assertRedirect(route('mypage.index'));
+
+        // Purchase レコードが作成されたか
+        $this->assertDatabaseHas('purchases', [
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+            'payment_method' => 'card',
+        ]);
+
+        // 商品が sold 状態か
+        $this->assertEquals('sold', $item->fresh()->status);
+    }
+
     public function test_user_can_purchase_with_konbini_payment()
     {
         $user = User::factory()->hasProfile()->create();
