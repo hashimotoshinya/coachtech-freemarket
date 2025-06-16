@@ -16,7 +16,7 @@ class ProfileFactory extends Factory
             'postal_code' => $this->faker->postcode(),
             'address' => $this->faker->address(),
             'building' => $this->faker->secondaryAddress(),
-            'image_path' => 'profile_images/sample-user.png', 
+            'image_path' => 'profile_images/sample-user.png',
         ];
     }
 }

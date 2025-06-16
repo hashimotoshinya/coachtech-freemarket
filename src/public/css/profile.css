@@ -67,3 +67,64 @@ input[type="text"] {
     font-size: 16px;
     cursor: pointer;
 }
+
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) and (max-width: 850px) {
+    .profile-container {
+        max-width: 600px;
+        padding: 0 20px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .image-select-btn {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .form-button button {
+        font-size: 17px;
+        padding: 14px;
+    }
+}
+
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .profile-container {
+        max-width: 700px;
+        padding: 0 40px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .profile-img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .image-select-btn {
+        font-size: 15px;
+        padding: 7px 14px;
+    }
+
+    input[type="text"] {
+        font-size: 16px;
+    }
+
+    .form-button button {
+        font-size: 18px;
+        padding: 16px;
+    }
+}

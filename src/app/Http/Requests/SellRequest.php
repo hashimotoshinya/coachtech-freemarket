@@ -24,14 +24,14 @@ class SellRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|image|mimes:jpeg,png|max:2048',
-            'categories' => 'required|array|min:1',
-            'categories.*' => 'exists:categories,id',
-            'condition' => 'required|in:良好,目立った傷や汚れなし,やや傷や汚れあり,状態が悪い',
-            'title' => 'required|string|max:255',
-            'brand' => 'nullable|string|max:255',
-            'description' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'image' => ['required', 'image', 'mimes:jpeg,png,max:2048'],
+            'categories' => ['required', 'array', 'min:1'],
+            'categories.*' => ['exists:categories', 'id'],
+            'condition' => ['required', 'in:良好,目立った傷や汚れなし,やや傷や汚れあり,状態が悪い'],
+            'title' => ['required', 'string', 'max:255'],
+            'brand' => ['nullable', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric', 'min:0'],
         ];
     }public function messages()
     {

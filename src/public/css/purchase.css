@@ -1,13 +1,11 @@
-/* 全体レイアウト */
 .purchase-wrapper {
     display: flex;
     justify-content: space-between;
     padding: 2em;
     background-color: #ffffff;
-    gap: 3em;
+    gap: 2em;
 }
 
-/* 左カラム（商品情報 + 支払い + 配送先） */
 .left-column {
     flex: 2;
     padding-right: 2em;
@@ -35,7 +33,6 @@
     color: #444;
 }
 
-/* 支払い方法 */
 .payment-section {
     margin-bottom: 2em;
 }
@@ -53,7 +50,6 @@
     border-radius: 6px;
 }
 
-/* 配送先 */
 .shipping-section h3 {
     font-size: 1.1em;
     margin-bottom: 0.3em;
@@ -82,7 +78,6 @@
     margin-top: 4px;
 }
 
-/* 右カラム（サマリーボックスとボタン） */
 .right-column {
     flex: 1;
 }
@@ -91,7 +86,7 @@
     border: 1px solid #ccc;
     padding: 1em;
     margin-bottom: 1em;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     border-radius: 6px;
 }
 
@@ -114,7 +109,6 @@
     text-align: right;
 }
 
-/* 購入ボタン */
 .purchase-button-container {
     margin-top: 1em;
 }
@@ -135,38 +129,67 @@
     background-color: #e85454;
 }
 
-/* タブレット対応（768px〜850px） */
-@media screen and (max-width: 850px) and (min-width: 768px) {
-    .item-grid {
-        grid-template-columns: repeat(2, 1fr);
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .purchase-wrapper {
+        flex-direction: column;
+        padding: 1.5em;
     }
 
-    .edit-button {
-        font-size: 14px;
-        padding: 6px 16px;
+    .left-column {
+        border-right: none;
+        padding-right: 0;
+        margin-bottom: 2em;
     }
 
-    .username {
-        font-size: 20px;
+    .right-column {
+        width: 100%;
     }
 
-    .user-icon {
-        width: 100px;
-        height: 100px;
+    .item-image img {
+        max-width: 100%;
+    }
+
+    .item-name {
+        font-size: 1.4em;
+    }
+
+    .item-price {
+        font-size: 1.1em;
+    }
+
+    .summary-box td {
+        font-size: 0.95em;
+    }
+
+    .purchase-button {
+        font-size: 1em;
+        padding: 0.9em;
     }
 }
 
-/* PC対応（1400px〜1540px） */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
-    .mypage-container {
-        max-width: 1280px;
+    .purchase-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        gap: 3em;
+        padding: 3em;
     }
 
-    .item-grid {
-        grid-template-columns: repeat(4, 1fr);
+    .item-name {
+        font-size: 1.7em;
     }
 
-    .item-card img {
-        height: 200px;
+    .item-price {
+        font-size: 1.3em;
+    }
+
+    .summary-box td {
+        font-size: 1.1em;
+        padding: 1em 0;
+    }
+
+    .purchase-button {
+        font-size: 1.2em;
+        padding: 1.2em;
     }
 }

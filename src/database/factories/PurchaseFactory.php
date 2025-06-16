@@ -19,7 +19,7 @@ class PurchaseFactory extends Factory
             'postal_code'    => $this->faker->postcode(),
             'address'        => $this->faker->address(),
             'building'       => $this->faker->secondaryAddress(),
-            'payment_method' => 'card', // 任意の固定値でOK
+            'payment_method' => 'card',
         ];
     }
 }

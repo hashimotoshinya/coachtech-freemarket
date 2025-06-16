@@ -37,6 +37,14 @@
     margin: 10px 0;
 }
 
+.item-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
 .favorite-button {
     appearance: none;
     background: transparent;
@@ -46,6 +54,18 @@
     cursor: pointer;
     font-size: 1.25rem;
     line-height: 1;
+    color: #ccc;
+}
+
+.favorite-button.liked {
+    color: #facc15;
+}
+
+.comment-count {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #555;
 }
 
 .purchase-button {
@@ -125,16 +145,59 @@
     cursor: pointer;
 }
 
-/* レスポンシブ対応 */
-@media screen and (max-width: 850px) {
+@media screen and (min-width: 768px) and (max-width: 850px) {
     .item-container {
         flex-direction: column;
         align-items: center;
+        padding: 16px;
     }
 
     .item-image-wrapper,
     .item-details {
         width: 100%;
         max-width: 100%;
+    }
+
+    .item-title {
+        font-size: 22px;
+    }
+
+    .item-price {
+        font-size: 18px;
+    }
+
+    .item-meta {
+        justify-content: start;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .item-container {
+        max-width: 1400px;
+        gap: 60px;
+        padding: 30px;
+    }
+
+    .item-image-wrapper {
+        flex: 0 0 600px;
+    }
+
+    .item-details {
+        max-width: 700px;
+    }
+
+    .item-title {
+        font-size: 28px;
+    }
+
+    .item-price {
+        font-size: 22px;
+    }
+
+    .item-meta {
+        font-size: 1.125rem;
+        gap: 20px;
     }
 }

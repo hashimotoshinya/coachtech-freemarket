@@ -14,7 +14,6 @@ use App\Services\StripeService;
 
 class PurchaseController extends Controller
 {
-    // 購入完了処理
     protected $stripe;
 
     public function __construct(StripeService $stripe)
@@ -81,14 +80,13 @@ class PurchaseController extends Controller
 
         return back()->withErrors(['payment_method' => '支払い方法が正しくありません。']);
     }
-    //Stripe成功時のコールバック
+
     public function stripeSuccess($item_id)
     {
         $user = auth()->user();
         $item = Item::findOrFail($item_id);
         $addressData = session('purchase_address');
 
-        // 決済完了後、購入レコードを保存
         Purchase::create([
             'user_id' => $user->id,
             'item_id' => $item->id,
@@ -98,7 +96,6 @@ class PurchaseController extends Controller
             'payment_method' => 'card',
         ]);
 
-        // soldフラグを更新
         $item->status = 'sold';
         $item->save();
 
@@ -107,7 +104,6 @@ class PurchaseController extends Controller
         return redirect()->route('mypage.index')->with('message', 'カードでの購入が完了しました。');
     }
 
-    // 住所変更フォーム表示
     public function editAddress($item_id)
     {
         $user = auth()->user();
@@ -120,15 +116,13 @@ class PurchaseController extends Controller
         $user = auth()->user();
         $profile = $user->profile;
 
-        $sessionAddress = session('purchase_address'); // ← これを渡す
+        $sessionAddress = session('purchase_address');
 
         return view('items.purchase', compact('item', 'profile', 'sessionAddress'));
     }
 
-    // 一時的に住所を変更（セッションに保存）
     public function updateAddress(AddressRequest $request, $item_id)
     {
-        // セッションに一時保存（DBのuser/profile情報は更新しない）
         session([
             'purchase_address' => [
                 'postal_code' => $request->postal_code,

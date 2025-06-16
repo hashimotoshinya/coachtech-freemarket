@@ -1,11 +1,9 @@
-/* 全体の基本スタイル */
 body {
     margin: 0;
     font-family: "Arial", sans-serif;
     background-color: #fff;
 }
 
-/* ヘッダー（黒帯） */
 .header {
     background-color: #000;
     padding: 10px 20px;
@@ -15,7 +13,6 @@ body {
     height: 32px;
 }
 
-/* メインレイアウト */
 .main {
     max-width: 400px;
     width: 90%;
@@ -25,14 +22,12 @@ body {
     box-sizing: border-box;
 }
 
-/* タイトル */
 .title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 40px;
 }
 
-/* フォーム */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -58,7 +53,6 @@ body {
     box-sizing: border-box;
 }
 
-/* ボタン */
 .login-button {
     background-color: #ff5c5c;
     color: #fff;
@@ -73,14 +67,12 @@ body {
     opacity: 0.9;
 }
 
-/* エラーメッセージ */
 .error {
     color: red;
     font-size: 14px;
     margin-top: 5px;
 }
 
-/* 登録リンク */
 .register-link {
     margin-top: 20px;
 }
@@ -94,9 +86,6 @@ body {
     text-decoration: underline;
 }
 
-/* レスポンシブ対応 */
-
-/* タブレット向け */
 @media screen and (max-width: 850px) {
     .main {
         margin: 40px auto;
@@ -113,7 +102,6 @@ body {
     }
 }
 
-/* PC大型ディスプレイでも崩れないように中央固定 */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .main {
         margin: 80px auto;

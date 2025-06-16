@@ -12,18 +12,16 @@ class ItemController extends Controller
     {
         $keyword = $request->input('keyword');
 
-        // おすすめタブ（全商品）からログインユーザーの出品を除外
         $items = Item::when($keyword, function ($query) use ($keyword) {
                 $query->where('title', 'like', "%{$keyword}%");
             })
             ->when(auth()->check(), function ($query) {
-                $query->where('user_id', '!=', auth()->id()); // ログインユーザーの出品を除外
+                $query->where('user_id', '!=', auth()->id());
             })
             ->with('itemImages')
             ->latest()
             ->get();
 
-        // マイリストタブ（ログインユーザーのお気に入り）
         $myItems = auth()->check()
             ? auth()->user()->favorites()
                 ->where('items.user_id', '!=', auth()->id())
@@ -41,7 +39,6 @@ class ItemController extends Controller
     {
         $item = Item::with(['comments.user', 'favoredByUsers','categories'])->findOrFail($id);
 
-        // ログインユーザーに関連するお気に入りを eager load
         $user = auth()->user();
         if ($user) {
             $user->load('favorites');
@@ -54,9 +51,8 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($id);
 
-        // プロフィール情報の取得（ユーザーがログインしている前提）
         $user = auth()->user();
-        $profile = $user->profile; // リレーションなら null の可能性あり
+        $profile = $user->profile;
 
         return view('items.purchase', compact('item', 'profile'));
     }

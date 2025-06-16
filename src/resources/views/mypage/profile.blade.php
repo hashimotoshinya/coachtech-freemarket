@@ -6,17 +6,6 @@
 <div class="profile-container">
     <h2>プロフィール設定</h2>
 
-    {{-- エラー表示 --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form action="{{ $profileExists ? route('profile.update') : route('profile.store') }}"
             method="POST" enctype="multipart/form-data">
         @csrf
@@ -33,26 +22,41 @@
                 画像を選択する
                 <input type="file" name="image" id="image-input" hidden>
             </label>
+            @error('image')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>ユーザー名</label>
             <input type="text" name="name" value="{{ old('name', $user->name) }}">
+            @error('name')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>郵便番号</label>
             <input type="text" name="postal_code" value="{{ old('postal_code', $profile->postal_code ?? '') }}">
+            @error('postal_code')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>住所</label>
             <input type="text" name="address" value="{{ old('address', $profile->address ?? '') }}">
+            @error('address')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>建物名</label>
             <input type="text" name="building" value="{{ old('building', $profile->building ?? '') }}">
+            @error('building')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-button">

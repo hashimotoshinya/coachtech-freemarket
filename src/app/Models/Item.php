@@ -20,25 +20,21 @@ class Item extends Model
         'user_id',
     ];
 
-    // 商品画像とのリレーション（例: 1商品に複数画像）
     public function itemImages()
     {
         return $this->hasMany(ItemImage::class);
     }
 
-    // 出品者とのリレーション
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // 購入履歴（1商品1購入）
     public function purchase()
     {
         return $this->hasOne(Purchase::class);
     }
 
-    // 商品が売り切れか判定
     public function isSoldOut()
     {
         return $this->status === 'sold';

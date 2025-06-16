@@ -14,7 +14,7 @@ class ItemImageFactory extends Factory
     {
         return [
             'item_id' => Item::factory(),
-            'image_path' => 'item_images/' . $this->faker->uuid . '.jpg', // ダミー画像パス
+            'image_path' => 'item_images/' . $this->faker->uuid . '.jpg',
         ];
     }
 }

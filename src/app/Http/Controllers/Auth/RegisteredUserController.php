@@ -14,7 +14,7 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    public function store(RegisterRequest $request) // ← FormRequestを使う！
+    public function store(RegisterRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -24,6 +24,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('profile.edit'); // ログイン後の遷移先
+        return redirect()->route('profile.edit');
     }
 }

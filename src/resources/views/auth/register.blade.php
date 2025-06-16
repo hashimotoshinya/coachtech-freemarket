@@ -16,8 +16,6 @@
         <h2>会員登録</h2>
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
-            {{-- ユーザー名 --}}
             <div class="form-group">
                 <label for="name">ユーザー名</label>
                 <input id="name" type="text" name="name" value="{{ old('name') }}">
@@ -26,7 +24,6 @@
                 @enderror
             </div>
 
-            {{-- メールアドレス --}}
             <div class="form-group">
                 <label for="email">メールアドレス</label>
                 <input id="email" type="email" name="email" value="{{ old('email') }}">
@@ -35,7 +32,6 @@
                 @enderror
             </div>
 
-            {{-- パスワード --}}
             <div class="form-group">
                 <label for="password">パスワード</label>
                 <input id="password" type="password" name="password">
@@ -44,7 +40,6 @@
                 @enderror
             </div>
 
-            {{-- パスワード（確認用） --}}
             <div class="form-group">
                 <label for="password_confirmation">確認用パスワード</label>
                 <input id="password_confirmation" type="password" name="password_confirmation">
@@ -53,14 +48,11 @@
                 @enderror
             </div>
 
-            {{-- 登録ボタン --}}
             <div class="form-button">
                 <button type="submit">登録する</button>
             </div>
-
         </form>
 
-        {{-- ログインリンク --}}
         <div class="login-link">
             <a href="{{ route('login') }}">ログインはこちら</a>
         </div>

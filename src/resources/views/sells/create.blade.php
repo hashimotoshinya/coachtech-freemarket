@@ -3,24 +3,12 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/sells_create.css') }}">
 
-<!-- 例：sells/create.blade.phpの冒頭あたり -->
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 <div class="sell-container">
     <h1 class="sell-title">商品の出品</h1>
 
     <form action="{{ route('sell.store') }}" method="POST" enctype="multipart/form-data" class="sell-form">
         @csrf
 
-        <!-- 商品画像 -->
         <div class="form-group">
             <label for="image">商品画像</label>
             <input type="file" name="image" id="image" accept="image/*">
@@ -33,7 +21,6 @@
             </div>
         </div>
 
-        <!-- カテゴリ -->
         <div class="form-group">
             <label>カテゴリー</label>
             <div class="category-tags">
@@ -53,7 +40,6 @@
             @enderror
         </div>
 
-        <!-- 商品の状態 -->
         <div class="form-group">
             <label for="condition">商品の状態</label>
             <select name="condition" id="condition">
@@ -69,7 +55,6 @@
             @enderror
         </div>
 
-        <!-- 商品名 -->
         <div class="form-group">
             <label for="title">商品名</label>
             <input type="text" name="title" id="title" value="{{ old('title') }}">
@@ -78,7 +63,6 @@
             @enderror
         </div>
 
-        <!-- ブランド名 -->
         <div class="form-group">
             <label for="brand">ブランド名</label>
             <input type="text" name="brand" id="brand" value="{{ old('brand') }}">
@@ -87,7 +71,6 @@
             @enderror
         </div>
 
-        <!-- 商品説明 -->
         <div class="form-group">
             <label for="description">商品の説明</label>
             <textarea name="description" id="description" rows="4">{{ old('description') }}</textarea>
@@ -96,7 +79,6 @@
             @enderror
         </div>
 
-        <!-- 販売価格 -->
         <div class="form-group">
             <label for="price">販売価格</label>
             <div class="price-input">
@@ -108,7 +90,6 @@
             @enderror
         </div>
 
-        <!-- 出品ボタン -->
         <div class="form-group">
             <button type="submit" class="submit-button">出品する</button>
         </div>
@@ -120,7 +101,6 @@ document.getElementById('image').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const previewImage = document.getElementById('previewImage');
 
-    // 初期状態リセット
     previewImage.style.display = 'none';
     previewImage.src = '#';
 

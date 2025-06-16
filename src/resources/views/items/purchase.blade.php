@@ -8,7 +8,6 @@
 <form action="{{ route('purchase.complete', ['item_id' => $item->id]) }}" method="POST">
     @csrf
     <div class="purchase-wrapper">
-        {{-- 左カラム --}}
         <div class="left-column">
             <div class="item-image">
                 @if ($item->itemImages->isNotEmpty())
@@ -66,7 +65,6 @@
             </div>
         </div>
 
-        {{-- 右カラム --}}
         <div class="right-column">
             <div class="summary-box">
                 <table>

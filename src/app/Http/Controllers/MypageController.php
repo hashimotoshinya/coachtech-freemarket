@@ -13,12 +13,10 @@ class MypageController extends Controller
     {
         $user = Auth::user()->load('profile');
         $items = $user->items()->with('itemImages')->get();
-        // 購入した商品
         $boughtItems = Purchase::with('item.itemImages')
             ->where('user_id', $user->id)
             ->get()
-            ->pluck('item'); // itemだけ取り出す
-        // 売れた商品（例：purchased_flg が true の商品）
+            ->pluck('item');
         $soldItems = $items->filter(function ($item) {
             return $item->purchased_flg === true;
         });

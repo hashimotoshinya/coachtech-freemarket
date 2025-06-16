@@ -8,13 +8,11 @@
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
     @yield('css')
 </head>
-<body class="bg-gray-100">
+<body>
 
     <header>
-        <!-- ロゴ -->
         <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH Logo">
 
-        <!-- 検索フォーム -->
         <form action="{{ url()->current() }}" method="GET">
             <input
                 type="text"
@@ -24,7 +22,6 @@
             >
         </form>
 
-        <!-- ナビゲーション -->
         <div>
             @auth
                 <form  action="{{ route('logout') }}" method="POST">
@@ -41,8 +38,7 @@
         </div>
     </header>
 
-    {{-- コンテンツ表示 --}}
-    <main class="p-6">
+    <main>
         @yield('content')
     </main>
 

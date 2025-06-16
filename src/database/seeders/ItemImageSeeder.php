@@ -31,7 +31,6 @@ class ItemImageSeeder extends Seeder
         $items = Item::all();
 
         foreach ($items as $index => $item) {
-            // エラー防止：画像パスが足りない場合スキップ
             if (!isset($imagePaths[$index])) {
                 continue;
             }
