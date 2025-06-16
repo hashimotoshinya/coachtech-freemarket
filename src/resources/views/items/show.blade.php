@@ -41,9 +41,9 @@
                         @csrf
                         @if (auth()->user() && auth()->user()->favorites->contains($item->id))
                             @method('DELETE')
-                            <button type="submit" class="text-yellow-500">⭐</button>
+                            <button type="submit" class="favorite-button text-yellow-500">⭐</button>
                         @else
-                            <button type="submit" class="text-gray-400 hover:text-yellow-500">⭐</button>
+                            <button type="submit" class="favorite-button text-gray-400 hover:text-yellow-500">⭐</button>
                         @endif
                     </form>
                     <span>{{ $item->favoredByUsers->count() }}</span>

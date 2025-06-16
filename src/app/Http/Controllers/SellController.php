@@ -22,7 +22,7 @@ class SellController extends Controller
         // 画像アップロード処理
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public'); // storage/app/public/images に保存
+            $imagePath = $request->file('image')->store('item_images', 'public'); // storage/app/public/images に保存
         }
 
         // Itemモデルにデータ保存
