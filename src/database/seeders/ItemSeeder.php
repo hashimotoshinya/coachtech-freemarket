@@ -13,9 +13,7 @@ class ItemSeeder extends Seeder
     public function run()
     {
         $user = User::factory()->create();
-
-        // 3カテゴリ作成
-        $categories = Category::factory()->count(3)->create();
+        $categories = Category::all();
 
         // 商品一覧
         $items = [
@@ -110,7 +108,7 @@ class ItemSeeder extends Seeder
 
             // カテゴリを1つ紐付け（ランダムでもOK）
             $item->categories()->attach(
-                $categories[$index % $categories->count()]->id
+                $categories->random()->id
             );
         }
     }
