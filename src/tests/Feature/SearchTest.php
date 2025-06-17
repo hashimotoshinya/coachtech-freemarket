@@ -11,7 +11,6 @@ class SearchTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test 商品名で部分一致検索ができる */
     public function test_items_can_be_searched_by_partial_match()
     {
         Item::factory()->create(['title' => 'Apple Watch']);
@@ -25,7 +24,6 @@ class SearchTest extends TestCase
         $response->assertDontSee('Galaxy Phone');
     }
 
-    /** @test マイリストでも検索キーワードが保持されている */
     public function test_search_keyword_is_preserved_in_mylist_tab()
     {
         $user = User::factory()->create();
@@ -36,14 +34,12 @@ class SearchTest extends TestCase
 
         $html = $response->getContent();
 
-        // mylistエリアだけを抽出して検証
         $start = strpos($html, '<div id="mylist"');
         $end = strpos($html, '</div>', $start);
         $mylistHtml = substr($html, $start, $end - $start);
 
         $this->assertStringContainsString('PlayStation', $mylistHtml);
 
-        // フォーム内に検索キーワードが保持されているか
         $response->assertSee('value="Play"', false);
     }
 }

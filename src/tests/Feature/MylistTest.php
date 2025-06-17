@@ -12,7 +12,6 @@ class MylistTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test マイリストにいいね商品だけが表示される */
     public function test_only_favorited_items_are_visible()
     {
         $user = User::factory()->create();
@@ -26,7 +25,6 @@ class MylistTest extends TestCase
 
         $html = $response->getContent();
 
-        // mylistエリアだけを抽出
         $start = strpos($html, '<div id="mylist"');
         $end = strpos($html, '</div>', $start);
         $mylistHtml = substr($html, $start, $end - $start);
@@ -35,7 +33,6 @@ class MylistTest extends TestCase
         $this->assertStringNotContainsString('未いいね商品', $mylistHtml);
     }
 
-    /** @test 売り切れ商品にはSOLD表示される */
     public function test_sold_items_show_sold_label_in_mylist()
     {
         $user = User::factory()->create();
@@ -43,7 +40,6 @@ class MylistTest extends TestCase
         $soldItem = Item::factory()->create(['title' => '売り切れ商品', 'status' => 'sold']);
         $user->favorites()->attach($soldItem->id);
 
-        // 売り切れ商品に対応する購入レコードを作成
         Purchase::factory()->create([
             'user_id' => $user->id,
             'item_id' => $soldItem->id,
@@ -55,7 +51,6 @@ class MylistTest extends TestCase
         $response->assertSee('Sold', false);
     }
 
-    /** @test マイリストに自分の商品が表示されない */
     public function test_own_items_are_not_shown_in_mylist()
     {
         $user = User::factory()->create();
@@ -72,7 +67,6 @@ class MylistTest extends TestCase
         $response->assertDontSee('自分の商品', false);
     }
 
-    /** @test 未認証ユーザーはマイリストを見られない */
     public function test_guest_cannot_see_mylist_items()
     {
         $response = $this->get('/');

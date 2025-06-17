@@ -14,7 +14,6 @@ class ItemDetailTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test 商品詳細ページにすべての情報が表示される */
     public function test_item_detail_page_displays_all_required_information()
     {
         $user = User::factory()->create(['name' => 'コメントユーザー']);
@@ -27,24 +26,20 @@ class ItemDetailTest extends TestCase
             'condition' => '新品',
         ]);
 
-        // カテゴリ2つ
         $categories = Category::factory()->count(2)->create();
         $item->categories()->attach($categories->pluck('id'));
 
-        // 商品画像
         ItemImage::factory()->create([
             'item_id' => $item->id,
             'image_path' => 'item_images/test_image.jpg',
         ]);
 
-        // コメント
         Comment::factory()->create([
             'item_id' => $item->id,
             'user_id' => $user->id,
             'content' => '興味あります！',
         ]);
 
-        // いいね
         $favUser = User::factory()->create();
         $favUser->favorites()->attach($item->id);
 
@@ -62,14 +57,12 @@ class ItemDetailTest extends TestCase
         $response->assertSee($categories[0]->name);
         $response->assertSee($categories[1]->name);
 
-        // いいね数・コメント数の表示（数値で判定する場合）
         $response->assertSee('⭐');
         $response->assertSee('1');
         $response->assertSee('💬');
         $response->assertSee('1');
     }
 
-    /** @test 複数カテゴリが商品詳細ページに表示される */
     public function test_multiple_categories_are_displayed_on_item_detail_page()
     {
         $item = Item::factory()->create();

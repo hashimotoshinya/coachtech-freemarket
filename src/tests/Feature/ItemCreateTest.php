@@ -20,10 +20,10 @@ class ItemCreateTest extends TestCase
         $response = $this->actingAs($user)->post(route('sell.store'), [
             'title' => 'テスト商品',
             'categories' => [$category->id],
-            'condition' => '良好', // バリデーションのin:に含まれる値に
+            'condition' => '良好',
             'description' => 'テスト商品の説明です。',
             'price' => 12345,
-            'image' => UploadedFile::fake()->image('test.jpg'), // 画像を追加
+            'image' => UploadedFile::fake()->image('test.jpg'),
         ]);
 
         $response->assertStatus(302);

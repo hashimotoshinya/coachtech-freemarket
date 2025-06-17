@@ -24,11 +24,11 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'postal_code' => ['nullable', 'regex:/^\d{3}-\d{4}$/'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'building' => ['nullable', 'string', 'max:255'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'name' => 'required|string|max:255',
+            'postal_code' => 'nullable|regex:/^\d{3}-\d{4}$/',
+            'address' => 'nullable|string|max:255',
+            'building' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 

@@ -20,7 +20,6 @@ class PurchaseItemTest extends TestCase
     {
         parent::setUp();
 
-        // StripeService のモックを事前バインド
         $this->stripeServiceMock = Mockery::mock(StripeService::class);
         $this->app->instance(StripeService::class, $this->stripeServiceMock);
     }
@@ -56,7 +55,6 @@ class PurchaseItemTest extends TestCase
         $user = User::factory()->create();
         $item = Item::factory()->create(['status' => 'available']);
 
-        // セッションに住所を保存（complete() で保存された前提を再現）
         $this->actingAs($user)
             ->withSession([
                 'purchase_address' => [
@@ -66,20 +64,16 @@ class PurchaseItemTest extends TestCase
                 ]
             ]);
 
-        // stripeSuccess にアクセス（= Stripe決済成功後の処理を再現）
         $response = $this->get(route('purchase.stripe.success', ['item_id' => $item->id]));
 
-        // リダイレクト先を確認
         $response->assertRedirect(route('mypage.index'));
 
-        // Purchase レコードが作成されたか
         $this->assertDatabaseHas('purchases', [
             'user_id' => $user->id,
             'item_id' => $item->id,
             'payment_method' => 'card',
         ]);
 
-        // 商品が sold 状態か
         $this->assertEquals('sold', $item->fresh()->status);
     }
 
