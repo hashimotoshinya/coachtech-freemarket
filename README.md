@@ -17,7 +17,10 @@
 ---
 
 ## 🛠 環境構築手順
+### 環境構築
 
+Docker を使用して開発環境を構築しています。
+docker-compose.ymlのnginx,mysqlにplatform: linux/amd64と記述しています。必要に応じて変更してください。
 ### 1. 前提環境
 
 - PHP 8.1+
@@ -30,28 +33,19 @@
 
 ### 2. セットアップ手順
 
-```bash
-# リポジトリをクローン
-git clone https://github.com/your-name/freemarket-app.git
-
-cd freemarket-app
-
-# 環境ファイルをコピー
+### 環境ファイルをコピー
 cp .env.example .env
 
-# 依存関係をインストール
+#### 依存関係をインストール
 composer install
 npm install && npm run dev
 
-# アプリケーションキーを生成
+#### アプリケーションキーを生成
 php artisan key:generate
 
-# データベースをマイグレート & シーディング
+#### データベースをマイグレート & シーディング
 php artisan migrate --seed
 
-# 開発サーバーを起動
-php artisan serve
-```
 ---
 
 ## 📸 ER 図
