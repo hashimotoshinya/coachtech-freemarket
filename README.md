@@ -23,16 +23,16 @@ Docker を使用して開発環境を構築しています。
 docker-compose.ymlのnginx,mysqlにplatform: linux/amd64と記述しています。必要に応じて変更してください。
 
 ### 使用技術
-- PHP7.4.9 
-- Laravel8.83.29 
-- MySQL8.0.26 
+- PHP 7.4.9 
+- Laravel 8.83.29 
+- MySQL 8.0.26 
 - Laravvel Fortify
 - MailHog
 - Stripeアカウント（テストキー）
 
 ### セットアップ手順
 
-### 環境ファイルをコピー
+#### 環境ファイルをコピー
 cp .env.example .env
 
 #### 依存関係をインストール
