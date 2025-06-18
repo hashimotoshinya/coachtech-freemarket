@@ -28,7 +28,7 @@ docker-compose.ymlのnginx,mysqlにplatform: linux/amd64と記述しています
 - MySQL 8.0.26 
 - Laravvel Fortify
 - MailHog
-- Stripeアカウント（テストキー）
+- Stripe（テストキー）
 
 ### セットアップ手順
 
@@ -113,9 +113,9 @@ MAIL_FROM_NAME="${APP_NAME}"
 ```
 #### テスト手順
 1.	ユーザー登録
-2.	MailHog Web UI http://localhost:8025 でメールを確認
-3.	認証リンクをクリックして有効化
-4.	ログインが可能に
+2.	MailHog Web UI http://localhost:8025 でメールを確認（ない場合は『認証メールを再送する』をクリック）
+4.	認証リンクをクリックして有効化
+5.	ログインが可能に
 ---
 ## 🧪 テスト
 #### 実行コマンド
