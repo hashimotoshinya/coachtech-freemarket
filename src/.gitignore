@@ -1,21 +1,21 @@
 /node_modules
 /public/hot
 
-# storage ディレクトリ全体を除外
-/storage/*
+# storage ディレクトリ全体を除外（src/ 配下に変更）
+/src/storage/*
 
 # ただし以下のフォルダ・ファイルは除外対象から除外（= Gitに含める）
-!/storage/app
-!/storage/app/public
-!/storage/app/public/images
-!/storage/app/public/images/**
-!/storage/app/public/item_images
-!/storage/app/public/item_images/**
-!/storage/app/public/profile_images
-!/storage/app/public/profile_images/**
+!/src/storage/app
+!/src/storage/app/public
+!/src/storage/app/public/images
+!/src/storage/app/public/images/**
+!/src/storage/app/public/item_images
+!/src/storage/app/public/item_images/**
+!/src/storage/app/public/profile_images
+!/src/storage/app/public/profile_images/**
 
 # 秘密鍵などは引き続き除外
-/storage/*.key
+/src/storage/*.key
 
 /vendor
 .env
