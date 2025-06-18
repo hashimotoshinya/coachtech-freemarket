@@ -77,11 +77,18 @@ php artisan migrate --seed
 - クレジットカードによる即時決済をサポート
 - 決済完了は Stripe の success_url リダイレクトで判断
 - Webhook未使用
+#### Stripe APIキーの取得手順
+1. [Stripe公式サイト](https://dashboard.stripe.com/register) にアクセスしてアカウントを作成します。
+2. ダッシュボードの「開発者」>「APIキー」へ進みます。
+3. 以下の2種類のキーを取得し、`.env` に記述します（**テストキーを使用してください**）：
+    - 公開可能キー（例: `pk_test_...`）
+    - シークレットキー（例: `sk_test_...`）
 #### .env設定例
  ```
 STRIPE_PUBLIC=pk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 STRIPE_SECRET=sk_test_XXXXXXXXXXXXXXXXXXXXXXXX
 ```
+> ⚠️ 本番環境では `.env` の Stripe キーは厳重に管理し、GitHub 等に公開しないよう注意してください。
 ---
 ## 📧 メール認証設定（MailHog 使用）
 #### 機能概要
@@ -129,4 +136,8 @@ php artisan test
 データベース設計の概要：
 
 ![ER図](docs/er-diagram.png)
+
+---
+##URL
+開発環境：http://localhost
 
