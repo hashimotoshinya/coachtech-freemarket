@@ -11,7 +11,11 @@
 <body>
 
     <header>
-        <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH Logo">
+        <div class="header-logo">
+            <a href="{{ route('items.index') }}">
+                <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH Logo">
+            </a>
+        </div>
 
         <form action="{{ url()->current() }}" method="GET">
             <input
