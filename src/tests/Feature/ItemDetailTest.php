@@ -61,6 +61,7 @@ class ItemDetailTest extends TestCase
         $response->assertSee('1');
         $response->assertSee('💬');
         $response->assertSee('1');
+
     }
 
     public function test_multiple_categories_are_displayed_on_item_detail_page()

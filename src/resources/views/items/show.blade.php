@@ -74,8 +74,8 @@
                         <div class="comment">
                             <div class="comment-avatar">
                                 <img class="comment-avatar"
-                                    src="{{ $user->profile && $user->profile->image_path
-                                    ? asset('storage/' . $user->profile->image_path)
+                                    src="{{ optional($comment->user->profile)->image_path
+                                    ? asset('storage/' . $comment->user->profile->image_path)
                                     : asset('images/default-user.png') }}"
                                     alt="ユーザー画像">
                             </div>
