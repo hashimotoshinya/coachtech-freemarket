@@ -5,7 +5,7 @@
 
 <div class="mypage-container">
     <div class="profile-section">
-    <img class="user-icon"
+        <img class="user-icon">
         <img class="user-icon"
             src="{{ $user->profile && $user->profile->image_path
             ? asset('storage/' . $user->profile->image_path)
