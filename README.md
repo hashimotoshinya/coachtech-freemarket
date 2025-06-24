@@ -135,7 +135,7 @@ php artisan test
 
 データベース設計の概要：
 
-![ER図](docs/er-diagram.png)
+![ER図](./ER.drawio.png)
 
 ---
 ##URL
