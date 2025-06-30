@@ -39,7 +39,7 @@ docker compose up -d --build
 
 #### Laravelコンテナに入る
 ```
-docker compose exec app bash
+docker-compose exec php bash
 ```
 
 #### 依存関係をインストール
