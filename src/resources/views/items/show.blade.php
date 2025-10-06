@@ -35,6 +35,21 @@
                 <span>{{ $item->favoredByUsers->count() }}</span>
 
                 <span class="comment-count">💬 {{ $item->comments->count() }}</span>
+
+                @auth
+                    @if ($item->status === 'available')
+                        <form action="{{ route('purchase_chats.store', $item->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="chat-button">💬 チャット開始</button>
+                        </form>
+                    @elseif ($item->status === 'trading')
+                        <p class="trading-status">取引中</p>
+                    @elseif ($item->status === 'sold')
+                        <p class="sold-status">売却済み</p>
+                    @endif
+                @else
+                    <a href="{{ route('login') }}" class="chat-button">💬 チャット開始（ログイン）</a>
+                @endauth
             </div>
 
             @auth

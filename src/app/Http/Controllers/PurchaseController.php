@@ -46,7 +46,8 @@ class PurchaseController extends Controller
 
         $paymentMethod = $request->payment_method;
 
-        $purchase = $user->purchases()->create([
+        Purchase::create([
+            'user_id' => $user->id,
             'item_id' => $item->id,
             'postal_code' => $postalCode,
             'address' => $address,
@@ -54,23 +55,14 @@ class PurchaseController extends Controller
             'payment_method' => $paymentMethod,
         ]);
 
+        $item->status = 'sold';
+        $item->save();
+
         if ($paymentMethod === 'card') {
             $session = $this->stripe->createCheckoutSession($item);
             return redirect($session->url);
         } elseif ($paymentMethod === 'convenience') {
             $paymentIntent = $this->stripe->createKonbiniPaymentIntent($item, $user);
-
-            Purchase::create([
-                'user_id' => $user->id,
-                'item_id' => $item->id,
-                'postal_code' => $postalCode,
-                'address' => $address,
-                'building' => $building,
-                'payment_method' => 'convenience',
-            ]);
-
-            $item->status = 'sold';
-            $item->save();
 
             return view('purchase.konbini', [
                 'paymentIntent' => $paymentIntent,
@@ -83,22 +75,6 @@ class PurchaseController extends Controller
 
     public function stripeSuccess($item_id)
     {
-        $user = auth()->user();
-        $item = Item::findOrFail($item_id);
-        $addressData = session('purchase_address');
-
-        Purchase::create([
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-            'postal_code' => $addressData['postal_code'],
-            'address' => $addressData['address'],
-            'building' => $addressData['building'],
-            'payment_method' => 'card',
-        ]);
-
-        $item->status = 'sold';
-        $item->save();
-
         session()->forget('purchase_address');
 
         return redirect()->route('mypage.index')->with('message', 'カードでの購入が完了しました。');

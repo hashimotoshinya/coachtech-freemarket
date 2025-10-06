@@ -12,11 +12,12 @@ class ItemSeeder extends Seeder
 {
     public function run()
     {
-        $user = User::factory()->create();
         $categories = Category::all();
 
         $items = [
+            // CO01〜05 → user1
             [
+                'user_email' => 'seller1@example.com',
                 'title' => '腕時計',
                 'price' => 15000,
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
@@ -24,6 +25,7 @@ class ItemSeeder extends Seeder
                 'condition' => '良好',
             ],
             [
+                'user_email' => 'seller1@example.com',
                 'title' => 'HDD',
                 'price' => 5000,
                 'description' => '高速で信頼性の高いハードディスク',
@@ -31,6 +33,7 @@ class ItemSeeder extends Seeder
                 'condition' => '目立った傷や汚れなし',
             ],
             [
+                'user_email' => 'seller1@example.com',
                 'title' => '玉ねぎ3束',
                 'price' => 300,
                 'description' => '新鮮な玉ねぎ3束のセット',
@@ -38,6 +41,7 @@ class ItemSeeder extends Seeder
                 'condition' => 'やや傷や汚れあり',
             ],
             [
+                'user_email' => 'seller1@example.com',
                 'title' => '革靴',
                 'price' => 4000,
                 'description' => 'クラシックなデザインの革靴',
@@ -45,13 +49,17 @@ class ItemSeeder extends Seeder
                 'condition' => '状態が悪い',
             ],
             [
+                'user_email' => 'seller1@example.com',
                 'title' => 'ノートPC',
                 'price' => 45000,
                 'description' => '高性能なノートパソコン',
                 'image' => 'Living+Room+Laptop.jpg',
                 'condition' => '良好',
             ],
+
+            // CO06〜10 → user2
             [
+                'user_email' => 'seller2@example.com',
                 'title' => 'マイク',
                 'price' => 8000,
                 'description' => '高音質のレコーディング用マイク',
@@ -59,6 +67,7 @@ class ItemSeeder extends Seeder
                 'condition' => '目立った傷や汚れなし',
             ],
             [
+                'user_email' => 'seller2@example.com',
                 'title' => 'ショルダーバッグ',
                 'price' => 3500,
                 'description' => 'おしゃれなショルダーバッグ',
@@ -66,6 +75,7 @@ class ItemSeeder extends Seeder
                 'condition' => 'やや傷や汚れあり',
             ],
             [
+                'user_email' => 'seller2@example.com',
                 'title' => 'タンブラー',
                 'price' => 500,
                 'description' => '使いやすいタンブラー',
@@ -73,6 +83,7 @@ class ItemSeeder extends Seeder
                 'condition' => '状態が悪い',
             ],
             [
+                'user_email' => 'seller2@example.com',
                 'title' => 'コーヒーミル',
                 'price' => 4000,
                 'description' => '手動のコーヒーミル',
@@ -80,6 +91,7 @@ class ItemSeeder extends Seeder
                 'condition' => '良好',
             ],
             [
+                'user_email' => 'seller2@example.com',
                 'title' => 'メイクセット',
                 'price' => 2500,
                 'description' => '便利なメイクアップセット',
@@ -88,7 +100,9 @@ class ItemSeeder extends Seeder
             ],
         ];
 
-        foreach ($items as $index => $itemData) {
+        foreach ($items as $itemData) {
+            $user = User::where('email', $itemData['user_email'])->first();
+
             $item = Item::create([
                 'user_id' => $user->id,
                 'title' => $itemData['title'],

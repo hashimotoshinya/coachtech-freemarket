@@ -21,7 +21,7 @@ class CreateItemsTable extends Migration
             $table->text('description');
             $table->string('condition');
             $table->integer('price');
-            $table->enum('status', ['available', 'sold'])->default('available');
+            $table->enum('status', ['available','trading', 'sold'])->default('available');
             $table->timestamps();
         });
     }

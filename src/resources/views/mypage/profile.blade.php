@@ -27,6 +27,20 @@
             @enderror
         </div>
 
+        @if ($user->average_rating)
+            <div class="star-rating">
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($user->average_rating >= $i)
+                        <span class="star full">★</span>
+                    @elseif ($user->average_rating == $i - 0.5)
+                        <span class="star half">★</span>
+                    @else
+                        <span class="star empty">☆</span>
+                    @endif
+                @endfor
+            </div>
+        @endif
+
         <div class="form-group">
             <label>ユーザー名</label>
             <input type="text" name="name" value="{{ old('name', $user->name) }}">

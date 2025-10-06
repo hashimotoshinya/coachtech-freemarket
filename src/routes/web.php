@@ -12,7 +12,10 @@ use App\Http\Controllers\{
     MypageController,
     ProfileController,
     CommentController,
-    FavoriteController
+    FavoriteController,
+    PurchaseChatController,
+    ChatMessageController,
+    ReviewController
 };
 
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
@@ -67,4 +70,29 @@ Route::middleware('auth')->group(function () {
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', '認証リンクを再送しました。');
     })->middleware('throttle:6,1')->name('verification.send');
+
+    Route::post('/items/{item}/chat', [PurchaseChatController::class, 'createChat'])
+        ->name('purchase_chats.store');
+
+    Route::get('/chats/{chat}', [PurchaseChatController::class, 'show'])
+        ->name('purchase_chats.show');
+
+    Route::delete('/chats/{chat}', [PurchaseChatController::class, 'destroy'])
+        ->name('purchase_chats.destroy');
+
+    Route::post('/chats/{chat}/messages', [ChatMessageController::class, 'storeMessage'])
+        ->name('purchase_chats.messages.store');
+
+    Route::get('/messages/{message}/edit', [ChatMessageController::class, 'edit'])
+        ->name('messages.edit');
+    Route::put('/messages/{message}', [ChatMessageController::class, 'update'])
+        ->name('messages.update');
+    Route::delete('/messages/{message}', [ChatMessageController::class, 'destroy'])
+        ->name('messages.destroy');
+
+    Route::post('/purchase_chats/{chat}/complete', [PurchaseChatController::class, 'complete'])
+        ->name('purchase_chats.complete');
+
+    Route::post('/reviews', [ReviewController::class, 'store'])
+        ->name('reviews.store');
 });

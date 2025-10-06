@@ -39,6 +39,35 @@ h2 {
     font-size: 13px;
 }
 
+.star-rating {
+    display: inline-flex;
+    font-size: 3rem;
+    color: gold;
+}
+
+.star.full {
+    color: gold;
+}
+
+.star.empty {
+    color: #ccc;
+}
+
+.star.half {
+    position: relative;
+    display: inline-block;
+    color: #ccc;
+}
+
+.star.half::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: gold;
+}
+
 .form-group {
     margin-bottom: 20px;
     text-align: left;
