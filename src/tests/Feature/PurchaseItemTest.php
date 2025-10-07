@@ -55,6 +55,14 @@ class PurchaseItemTest extends TestCase
         $user = User::factory()->create();
         $item = Item::factory()->create(['status' => 'available']);
 
+        $this->stripeServiceMock
+            ->shouldReceive('createCheckoutSession')
+            ->once()
+            ->with(Mockery::type(Item::class))
+            ->andReturn((object)[
+                'url' => 'https://checkout.stripe.com/test-session',
+            ]);
+
         $this->actingAs($user)
             ->withSession([
                 'purchase_address' => [
@@ -64,9 +72,11 @@ class PurchaseItemTest extends TestCase
                 ]
             ]);
 
-        $response = $this->get(route('purchase.stripe.success', ['item_id' => $item->id]));
+        $response = $this->post(route('purchase.complete', ['item_id' => $item->id]), [
+            'payment_method' => 'card',
+        ]);
 
-        $response->assertRedirect(route('mypage.index'));
+        $response->assertRedirect();
 
         $this->assertDatabaseHas('purchases', [
             'user_id' => $user->id,
