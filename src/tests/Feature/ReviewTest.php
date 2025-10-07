@@ -59,7 +59,9 @@ class ReviewTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get(route('profile.edit', $user->id));
-        $response->assertSee('5'); 
+
+        $response->assertSee('<span class="star full">★</span>', false);
+        $response->assertSee('<span class="star half">★</span>', false);
     }
 
     public function test_no_reviews_means_no_average_is_displayed()

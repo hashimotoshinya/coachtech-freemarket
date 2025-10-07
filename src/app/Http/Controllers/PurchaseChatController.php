@@ -113,9 +113,6 @@ class PurchaseChatController extends Controller
             'completed_at' => now(),
         ]);
 
-        $item = $chat->item;
-        $item->update(['status' => 'available']);
-
         $seller = User::find($chat->seller_id);
         Mail::to($seller->email)->send(new TransactionCompletedMail($chat));
 
