@@ -43,6 +43,10 @@ class MypageController extends Controller
         ])
         ->get();
 
+        $tradingChats = $tradingChats->sortByDesc(function($chat) {
+            return optional($chat->messages->sortByDesc('created_at')->first())->created_at;
+        })->values();
+
         $unreadCount = \App\Models\ChatMessage::whereIn('chat_id', $tradingChats->pluck('id'))
             ->where('user_id', '!=', $user->id)
             ->where('is_read', false)

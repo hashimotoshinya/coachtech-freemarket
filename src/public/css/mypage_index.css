@@ -179,14 +179,44 @@
     font-weight: bold;
 }
 
-@media screen and (max-width: 1024px) {
-    .item-grid {
-        grid-template-columns: repeat(2, 1fr);
+@media screen and (max-width: 1540px) {
+    .mypage-container {
+        max-width: 98vw;
+        padding: 30px 10px;
+    }
+
+    .user-header {
+        gap: 80px;
+    }
+
+    .item-card img {
+        height: 150px;
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1024px) {
+    .mypage-container {
+        max-width: 100vw;
+        padding: 20px 5px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .user-header {
+        gap: 40px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .item-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .item-card img {
+        height: 120px;
     }
 }

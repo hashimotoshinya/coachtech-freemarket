@@ -48,3 +48,51 @@
     font-size: 13px;
     margin-top: 4px;
 }
+
+@media (max-width: 1540px) {
+    .edit-message-container {
+        max-width: 90vw;
+    }
+}
+
+@media (max-width: 1400px) {
+    .edit-message-container {
+        max-width: 98vw;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 850px) {
+    .edit-message-container {
+        max-width: 100vw;
+        margin: 10px 0;
+        padding: 8px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .edit-message-container h2 {
+        font-size: 18px;
+    }
+
+    .edit-message-container textarea {
+        min-height: 80px;
+        font-size: 13px;
+    }
+
+    .edit-message-container button {
+        width: 100%;
+        font-size: 13px;
+        padding: 8px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .edit-message-container {
+        padding: 4px;
+    }
+
+    .edit-message-container textarea {
+        min-height: 60px;
+    }
+}

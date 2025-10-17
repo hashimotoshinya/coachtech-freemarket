@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/chats_show.css') }}">
@@ -166,7 +166,8 @@
                 @enderror
 
                 <label for="image-upload" class="image-upload-label">画像を追加</label>
-                <input type="file" id="image-upload" name="image" accept="image/jpeg,image/png">
+                <input type="file" id="image-upload" name="image">
+                <div class="error-message" id="image-error"></div>
 
                 <div class="preview-container" id="preview-container"></div>
 
@@ -205,13 +206,22 @@
         }
 
         const imageUpload = document.getElementById('image-upload');
+        const imageError = document.getElementById('image-error');
+
         if (imageUpload) {
             imageUpload.addEventListener('change', function(event) {
                 const file = event.target.files[0];
-                const previewContainer = document.getElementById('preview-container');
-                previewContainer.innerHTML = "";
+                imageError.textContent = "";
 
                 if (file) {
+                    const allowedTypes = ['image/jpeg', 'image/png'];
+                    if (!allowedTypes.includes(file.type)) {
+                        imageError.textContent = '「.png」または「.jpeg」形式でアップロードしてください';
+                        event.target.value = "";
+                        return;
+                    }
+                    const previewContainer = document.getElementById('preview-container');
+                    previewContainer.innerHTML = "";
                     const fileName = document.createElement('span');
                     fileName.classList.add('file-name');
                     fileName.textContent = file.name;
